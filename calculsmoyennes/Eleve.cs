@@ -8,14 +8,14 @@ namespace calculsmoyennes
     {
         public string nom { get; private set; }
         public string prenom { get; private set; }
+        public List<Note> notes { get; private set; }
 
         public Eleve(string nomEleve, string prenomEleve) 
         {
             nom = nomEleve;
             prenom = prenomEleve;
+            notes = new List<Note>();
         }
-
-        public List<Note> notes;
 
         public void AjouterNote(Note note)
         {
@@ -32,20 +32,24 @@ namespace calculsmoyennes
                     moyennematiere += notes[counter].note;
                 }
             }
-            moyennematiere = Math.Truncate((moyennematiere / notes.Count) * 100) * 0.01;
+            moyennematiere = Math.Truncate((moyennematiere / 5) * 100) / 100;
             return moyennematiere;
         }
 
         public double Moyenne()
         {
             double moyennegenerale = 0;
-            for (int i = 0; i < 10 ; i++)
-            {
-                double moyennechaquematiere = Moyenne(i);
-                moyennegenerale += moyennechaquematiere;
 
-            }
-            moyennegenerale = Math.Truncate((moyennegenerale / 5) * 100) * 0.01;
+            int nbmatieres = 0;
+            double moyennechaquematiere = Moyenne(nbmatieres);
+            do
+            {
+                moyennechaquematiere = Moyenne(nbmatieres);
+                moyennegenerale += moyennechaquematiere;
+                nbmatieres += 1;
+            } while (moyennechaquematiere != 0);
+            
+             moyennegenerale = Math.Truncate((moyennegenerale / (nbmatieres-1)) * 100) / 100;
             return moyennegenerale;
         }
     }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Numerics;
 
 namespace calculsmoyennes
 {
@@ -9,12 +8,14 @@ namespace calculsmoyennes
     {
         public string nomClasse { get; private set; }
 
-        public List<Eleve> eleves;
-        public List<string> matieres;
+        public List<Eleve> eleves { get; private set; }
+        public List<string> matieres { get; private set; }
 
         public Classe(string leNomClasse) 
         {
             nomClasse = leNomClasse;
+            eleves = new List<Eleve>();
+            matieres = new List<string>();
         }
 
         public void AjouterEleve(string prenom, string nom)
@@ -36,7 +37,7 @@ namespace calculsmoyennes
                 double moyennematiereeleve = eleves[i].Moyenne(matiere);
                 moyennematiereclasse += moyennematiereeleve;
             }
-            moyennematiereclasse = Math.Truncate((moyennematiereclasse / eleves.Count) * 100) * 0.01;
+            moyennematiereclasse = Math.Truncate((moyennematiereclasse / eleves.Count) * 100) / 100;
             return moyennematiereclasse;
         }
 
@@ -48,7 +49,7 @@ namespace calculsmoyennes
                 double moyennematieregenerale = Moyenne(j);
                 moyennegeneraleclasse += moyennematieregenerale;
             }
-            moyennegeneraleclasse = Math.Truncate((moyennegeneraleclasse / matieres.Count) * 100) * 0.01;
+            moyennegeneraleclasse = Math.Truncate((moyennegeneraleclasse / matieres.Count) * 100) / 100;
             return moyennegeneraleclasse;
         }
 
